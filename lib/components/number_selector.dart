@@ -6,7 +6,7 @@ import '../core/text_styles.dart';
 class NumberSelector extends StatefulWidget {
   final String title;
   final int value;
-  final ValueChanged<int> onChanged;
+  final Function(int) onChanged;
 
   const NumberSelector({
     super.key,
@@ -30,18 +30,42 @@ class _NumberSelectorState extends State<NumberSelector> {
             color: AppColors.backgroundComponent,
             borderRadius: BorderRadius.circular(16),
           ),
-          child: Column(
-            children: [
-              Text(widget.title, style: TextStyles.bodyText),
-              Text(
-                widget.value.toString(),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
+          child: Padding(
+            padding: EdgeInsets.all(8),
+            child: Column(
+              children: [
+                Text(widget.title.toUpperCase(), style: TextStyles.bodyText),
+                Text(
+                  widget.value.toString(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    FloatingActionButton(
+                      onPressed: () {
+                        widget.onChanged(widget.value - 1);
+                      },
+                      shape: CircleBorder(),
+                      backgroundColor: AppColors.primary,
+                      child: Icon(Icons.remove, color: Colors.white),
+                    ),
+                    FloatingActionButton(
+                      onPressed: () {
+                        widget.onChanged(widget.value + 1);
+                      },
+                      shape: CircleBorder(),
+                      backgroundColor: AppColors.primary,
+                      child: Icon(Icons.add, color: Colors.white),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
